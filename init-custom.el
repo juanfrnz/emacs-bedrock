@@ -3,23 +3,29 @@
 ;;  C-x p f -> fuzzy find
 
 (xterm-mouse-mode)
+(setq scroll-step 1)       ;; Scroll one line at a time
+(setq scroll-conservatively 101) ;; Avoid recentering the cursor while scrolling
+(setq scroll-margin 0)     ;; Do not keep a margin at the top/bottom
+(setq scroll-preserve-screen-position 'always) ;; Keep cursor position while scrolling
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; Scroll one line per mouse wheel tick
+(setq mouse-wheel-progressive-speed nil) ;; Disable speedup when scrolling fast
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
-(when (and (not (display-graphic-p)) (eq system-type 'darwin))
-  (defun copy-to-clipboard ()
-    (interactive)
-    (if (region-active-p)
-        (progn
-          (shell-command-on-region (region-beginning) (region-end) "pbcopy")
-          (deactivate-mark))
-      (message "No region active; can't copy!")))
+;; (when (and (not (display-graphic-p)) (eq system-type 'darwin))
+;;   (defun copy-to-clipboard ()
+;;     (interactive)
+;;     (if (region-active-p)
+;;         (progn
+;;           (shell-command-on-region (region-beginning) (region-end) "pbcopy")
+;;           (deactivate-mark))
+;;       (message "No region active; can't copy!")))
 
-  (defun paste-from-clipboard ()
-    (interactive)
-    (insert (shell-command-to-string "pbpaste")))
+;;   (defun paste-from-clipboard ()
+;;     (interactive)
+;;     (insert (shell-command-to-string "pbpaste")))
 
-  (global-set-key (kbd "M-w") 'copy-to-clipboard)
-  (global-set-key (kbd "C-y") 'paste-from-clipboard))
+;;   (global-set-key (kbd "M-w") 'copy-to-clipboard)
+;;   (global-set-key (kbd "C-y") 'paste-from-clipboard))
 
 ;; Auto completion example
 (use-package corfu
@@ -64,6 +70,9 @@
 (use-package catppuccin-theme
   :init (setq catppuccin-flavor 'mocha)
   :hook (after-init . (lambda () (load-theme 'catppuccin))))
+;; (use-package emacs
+;;   :config
+;;   (load-theme 'modus-vivendi-tinted))
 
 (use-package treesit-auto
   :custom
@@ -98,3 +107,13 @@
                 tsx-ts-mode-hook))
   (add-hook mode #'eglot-ensure))
 
+(use-package prettier
+  :ensure t
+  :hook (typescript-ts-mode . prettier-mode) ; Enable Prettier for specific modes
+  :config
+  (setq prettier-mode-sync-config-flag t)) ; Sync Prettier config with buffer
+
+(defun copilot-keybindings ()
+  (local-set-key (kbd "M-q") 'copilot-accept-completion-by-paragraph))
+
+(add-hook 'copilot-mode-hook 'copilot-keybindings)

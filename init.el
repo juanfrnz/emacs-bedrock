@@ -155,8 +155,8 @@ If the new path's directories does not exist, create them."
 
 ;; We won't set these, but they're good to know about
 ;;
-(setopt indent-tabs-mode nil)
-(setopt tab-width 4)
+;;(setopt indent-tabs-mode nil)
+;;(setopt tab-width 4)
 
 ;; Misc. UI tweaks
 (blink-cursor-mode -1)                                ; Steady cursor
@@ -198,9 +198,9 @@ If the new path's directories does not exist, create them."
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package emacs
-  :config
-  (load-theme 'modus-vivendi))          ; for light theme, use modus-operandi
+;; (use-package emacs
+;;   :config
+;;   (load-theme 'modus-vivendi))          ; for light theme, use modus-operandi
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -250,8 +250,15 @@ If the new path's directories does not exist, create them."
  '(custom-safe-themes
    '("c46651ab216eb31e699be1bd5e6df8229b08005b534194c1ea92519b09661d71"
      default))
- '(package-selected-packages nil)
- '(warning-suppress-log-types '((use-package) (comp) (bytecomp))))
+ '(package-selected-packages
+   '(apheleia avy cape catppuccin-theme copilot corfu-terminal
+	      doom-modeline eat embark-consult ivy json-mode kind-icon
+	      lsp-mode lsp-ui magit marginalia nerd-icons-corfu
+	      nix-ts-mode orderless prettier treesit-auto vertico
+	      wgrep yaml-mode))
+ '(warning-suppress-log-types
+   '((treesit) (treesit) (treesit) (treesit) (use-package) (comp)
+     (bytecomp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
