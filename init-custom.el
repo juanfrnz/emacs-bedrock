@@ -104,13 +104,16 @@
   :bind (("C-x C-b" . consult-buffer))) ;; More powerful buffer switcher
 
 (dolist (mode '(c++-mode-hook
+		c-mode-hook
+		c-ts-mode-hook
+		c++-ts-mode-hook
                 emacs-lisp-mode-hook
                 js-ts-mode-hook
                 typescript-ts-mode-hook
                 rust-ts-mode-hook
                 go-ts-mode-hook
                 tsx-ts-mode-hook))
-  (add-hook mode #'eglot-ensure))
+  (add-hook mode 'eglot-ensure))
 
 (use-package prettier
   :ensure t
