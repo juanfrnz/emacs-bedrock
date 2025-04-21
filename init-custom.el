@@ -55,6 +55,9 @@
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
+(use-package nerd-icons-corfu
+  :ensure t)
+
 (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
 (setq nerd-icons-corfu-mapping
       '((array :style "cod" :icon "symbol_array" :face font-lock-type-face)
@@ -68,6 +71,7 @@
 
 
 (use-package catppuccin-theme
+  :ensure t
   :init (setq catppuccin-flavor 'mocha)
   :hook (after-init . (lambda () (load-theme 'catppuccin))))
 ;; (use-package emacs
@@ -75,6 +79,7 @@
 ;;   (load-theme 'modus-vivendi-tinted))
 
 (use-package treesit-auto
+  :ensure t
   :custom
   (treesit-auto-install 'prompt)
   :config
