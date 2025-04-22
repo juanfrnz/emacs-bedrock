@@ -13,9 +13,11 @@
 (setq select-enable-primary t)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
-(add-hook 'yaml-mode-hook
-          (lambda ()
-            (setq-local tab-width 2)))
+(mapcar (lambda (mode)
+          (add-hook (intern (format "%s-hook" mode))
+                    (lambda ()
+                      (setq-local tab-width 2))))
+        '(yaml-mode yaml-ts-mode))
 
 ;; (when (and (not (display-graphic-p)) (eq system-type 'darwin))
 ;;   (defun copy-to-clipboard ()
@@ -132,3 +134,29 @@
 (add-hook 'copilot-mode-hook 'copilot-keybindings)
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+(use-package clang-format
+  :ensure t
+  )
+(when (executable-find "clang-format")
+  (require 'clang-format)
+
+  (global-set-key (kbd "C-c f") 'clang-format-buffer)
+
+  (defun c++-tab-format ()
+    (interactive)
+    (clang-format-region (line-beginning-position) (line-end-position)))
+
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (local-set-key (kbd "TAB") 'c++-tab-format)))
+  (add-hook 'c++-ts-mode-hook
+            (lambda ()
+              (local-set-key (kbd "TAB") 'c++-tab-format)))
+  
+  (add-hook 'c++-mode-hook 'clang-format-on-save-mode)
+  (add-hook 'c-mode-hook 'clang-format-on-save-mode)
+  (add-hook 'c++-ts-mode-hook 'clang-format-on-save-mode)
+  (add-hook 'c-ts-mode-hook 'clang-format-on-save-mode)
+  )
+
