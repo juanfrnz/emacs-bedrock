@@ -13,6 +13,9 @@
 (setq select-enable-primary t)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+(add-hook 'yaml-mode-hook
+          (lambda ()
+            (setq-local tab-width 2)))
 
 ;; (when (and (not (display-graphic-p)) (eq system-type 'darwin))
 ;;   (defun copy-to-clipboard ()
