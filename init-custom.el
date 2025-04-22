@@ -11,6 +11,9 @@
 (setq mouse-wheel-progressive-speed nil) ;; Disable speedup when scrolling fast
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
 ;; (when (and (not (display-graphic-p)) (eq system-type 'darwin))
 ;;   (defun copy-to-clipboard ()
 ;;     (interactive)
@@ -123,5 +126,6 @@
 
 (defun copilot-keybindings ()
   (local-set-key (kbd "M-q") 'copilot-accept-completion-by-paragraph))
-
 (add-hook 'copilot-mode-hook 'copilot-keybindings)
+
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
