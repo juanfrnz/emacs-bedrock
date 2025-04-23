@@ -251,10 +251,11 @@ If the new path's directories does not exist, create them."
    '("c46651ab216eb31e699be1bd5e6df8229b08005b534194c1ea92519b09661d71"
      default))
  '(package-selected-packages
-   '(avy cape catppuccin-theme clang-format corfu-terminal doom-modeline
-         eat eglot embark-consult json-mode marginalia markdown-mode
-         nerd-icons-corfu orderless prettier treesit-auto vertico
-         wgrep yaml-mode))
+   '(astro-ts-mode avy cape catppuccin-theme clang-format corfu-terminal
+                   doom-modeline eat eglot embark-consult json-mode
+                   lsp-pyright marginalia markdown-mode
+                   markdown-ts-mode nerd-icons-corfu orderless
+                   prettier treesit-auto vertico wgrep yaml-mode))
  '(warning-suppress-log-types
    '((treesit) (treesit) (treesit) (treesit) (use-package) (comp)
      (bytecomp))))
