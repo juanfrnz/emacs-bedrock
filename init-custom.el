@@ -78,13 +78,13 @@
         ;; Remember to add an entry for `t', the library uses that as default.
 
 
-(use-package catppuccin-theme
-  :ensure t
-  :init (setq catppuccin-flavor 'mocha)
-  :hook (after-init . (lambda () (load-theme 'catppuccin))))
-;; (use-package emacs
-;;   :config
-;;   (load-theme 'modus-vivendi-tinted))
+;; (use-package catppuccin-theme
+;;   :ensure t
+;;   :init (setq catppuccin-flavor 'mocha)
+;;   :hook (after-init . (lambda () (load-theme 'catppuccin))))
+(use-package emacs
+  :config
+  (load-theme 'modus-vivendi-tinted))
 
 (use-package treesit-auto
   :ensure t
@@ -167,3 +167,9 @@
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
+
+(require 'ansi-color)
+(defun my/colorize-compilation-buffer ()
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region compilation-filter-start (point))))
+(add-hook 'compilation-filter-hook #'my/colorize-compilation-buffer)
