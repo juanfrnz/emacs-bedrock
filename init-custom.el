@@ -179,6 +179,19 @@
 (use-package helm-rg
   :ensure t)
 
+(use-package projectile
+  :ensure t
+  :init (projectile-mode 1)
+  :config
+  (setq projectile-indexing-method 'alien) ;; uses external tools like fd or git
+  (setq projectile-enable-caching t))
+
+(use-package helm-projectile
+  :ensure t
+  :after (helm projectile)
+  :config
+  (helm-projectile-on))
+
 (use-package helm
   :ensure t
   :init
@@ -198,7 +211,9 @@
 
   ;; Keybindings
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-x C-g") 'helm-rg)
+  (global-set-key (kbd "C-c C-g") 'helm-rg)
+  (global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x b") 'helm-mini)
+
 )
