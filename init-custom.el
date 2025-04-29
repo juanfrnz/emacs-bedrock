@@ -11,6 +11,7 @@
 (setq mouse-wheel-progressive-speed nil) ;; Disable speedup when scrolling fast
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
+
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (mapcar (lambda (mode)
@@ -173,3 +174,31 @@
   (let ((inhibit-read-only t))
     (ansi-color-apply-on-region compilation-filter-start (point))))
 (add-hook 'compilation-filter-hook #'my/colorize-compilation-buffer)
+
+
+(use-package helm-rg
+  :ensure t)
+
+(use-package helm
+  :ensure t
+  :init
+  (helm-mode 1)
+  :config
+  ;; Fuzzy matching
+  (setq helm-mode-fuzzy-match t)
+  (setq helm-completion-in-region-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-recentf-fuzzy-match t)
+  (setq helm-ff-fuzzy-matching t)
+
+  ;; Follow (preview) mode settings
+  (setq helm-follow-mode-persistent t)
+  (setq helm-ff-quick-update t)
+  (setq helm-ff-auto-follow t)
+
+  ;; Keybindings
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-x C-g") 'helm-rg)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x b") 'helm-mini)
+)
