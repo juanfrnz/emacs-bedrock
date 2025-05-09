@@ -210,7 +210,7 @@
   (setq helm-ff-auto-follow t)
 
   ;; Keybindings
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  ;;(global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "C-c C-g") 'helm-rg)
   (global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
   (global-set-key (kbd "M-x") 'helm-M-x)
