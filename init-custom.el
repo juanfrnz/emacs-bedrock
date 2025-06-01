@@ -108,9 +108,9 @@
   :ensure t
   :init (vertico-mode))
 
-(use-package consult
+(use-package helm
   :ensure t
-  :bind (("C-x C-b" . consult-buffer))) ;; More powerful buffer switcher
+  :bind (("C-x C-b" . helm-mini))) ;; 
 
 (dolist (mode '(c++-mode-hook
 		c-mode-hook
