@@ -218,6 +218,9 @@ If the new path's directories does not exist, create them."
 ;; Packages for rust development
 (load-file (expand-file-name "extras/rust.el" user-emacs-directory))
 
+;; Packages for web development
+(load-file (expand-file-name "extras/web.el" user-emacs-directory))
+
 ;; Packages for other software development
 (load-file (expand-file-name "extras/dev.el" user-emacs-directory))
 
