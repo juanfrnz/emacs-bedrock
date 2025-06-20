@@ -227,9 +227,6 @@ If the new path's directories does not exist, create them."
 ;; Packages for web development
 (load-file (expand-file-name "extras/web.el" user-emacs-directory))
 
-;; Packages for other software development
-(load-file (expand-file-name "extras/dev.el" user-emacs-directory))
-
 ;; Org-mode configuration
 ;; WARNING: need to customize things inside the elisp file before use! See
 ;; the file extras/org-intro.txt for help.
