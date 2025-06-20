@@ -215,8 +215,14 @@ If the new path's directories does not exist, create them."
 ;; These ones are *strongly* recommended!
 (load-file (expand-file-name "extras/base.el" user-emacs-directory))
 
-;; Packages for rust development
+;; Packages for main software development
+(load-file (expand-file-name "extras/dev.el" user-emacs-directory))
+
+;; Customize for rust development
 (load-file (expand-file-name "extras/rust.el" user-emacs-directory))
+
+;; Customize for go development
+(load-file (expand-file-name "extras/go.el" user-emacs-directory))
 
 ;; Packages for web development
 (load-file (expand-file-name "extras/web.el" user-emacs-directory))
@@ -253,12 +259,10 @@ If the new path's directories does not exist, create them."
  '(custom-safe-themes
    '("c46651ab216eb31e699be1bd5e6df8229b08005b534194c1ea92519b09661d71"
      default))
- '(package-selected-packages
-   '(astro-ts-mode avy cape catppuccin-theme clang-format corfu-terminal
-                   doom-modeline eat eglot embark-consult json-mode
-                   lsp-pyright marginalia markdown-mode
-                   markdown-ts-mode nerd-icons-corfu orderless
-                   prettier treesit-auto vertico wgrep yaml-mode))
+ '(package-selected-packages nil)
+ '(package-vc-selected-packages
+   '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
+              "main")))
  '(warning-suppress-log-types
    '((treesit) (treesit) (treesit) (treesit) (use-package) (comp)
      (bytecomp))))
@@ -270,4 +274,3 @@ If the new path's directories does not exist, create them."
  )
 
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
-

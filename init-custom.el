@@ -11,9 +11,22 @@
 (setq mouse-wheel-progressive-speed nil) ;; Disable speedup when scrolling fast
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
+(setq select-enable-clipboard t)
+(setq select-enable-primary t)
+(setq interprogram-cut-function
+      (lambda (text &optional push)
+        (let ((process-connection-type nil))
+          (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+            (process-send-string proc text)
+            (process-send-eof proc)))))
+(setq interprogram-paste-function
+      (lambda ()
+        (shell-command-to-string "pbpaste")))
+
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+
 (mapcar (lambda (mode)
           (add-hook (intern (format "%s-hook" mode))
                     (lambda ()
@@ -130,7 +143,12 @@
   :config
   (setq prettier-mode-sync-config-flag t)) ; Sync Prettier config with buffer
 
+(use-package copilot
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+            :rev :newest
+            :branch "main"))
 (defun copilot-keybindings ()
+  (local-set-key (kbd "M-n") 'copilot-next-completion)
   (local-set-key (kbd "M-q") 'copilot-accept-completion-by-paragraph))
 (add-hook 'copilot-mode-hook 'copilot-keybindings)
 
