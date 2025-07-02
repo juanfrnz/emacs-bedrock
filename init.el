@@ -253,16 +253,9 @@ If the new path's directories does not exist, create them."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("c46651ab216eb31e699be1bd5e6df8229b08005b534194c1ea92519b09661d71"
-     default))
- '(package-selected-packages nil)
  '(package-vc-selected-packages
    '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
-              "main")))
- '(warning-suppress-log-types
-   '((treesit) (treesit) (treesit) (treesit) (use-package) (comp)
-     (bytecomp))))
+              "main"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
