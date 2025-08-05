@@ -23,3 +23,7 @@
          (css-mode . prettier-mode)
          (json-mode . prettier-mode)
          (web-mode . prettier-mode)))
+
+(package-install 'markdown-mode)
+(add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
+
