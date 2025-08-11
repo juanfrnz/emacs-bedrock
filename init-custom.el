@@ -13,16 +13,19 @@
 (setq select-enable-primary t)
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
-(setq interprogram-cut-function
-      (lambda (text &optional push)
-        (let ((process-connection-type nil))
-          (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-            (process-send-string proc text)
-            (process-send-eof proc)))))
-(setq interprogram-paste-function
-      (lambda ()
-        (shell-command-to-string "pbpaste")))
 
+;; copy-paste clipboard (Darwin)
+(when (eq system-type 'darwin)
+  (setq interprogram-cut-function
+        (lambda (text &optional push)
+          (let ((process-connection-type nil))
+            (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+              (process-send-string proc text)
+              (process-send-eof proc))))))
+(when (eq system-type 'darwin)
+  (setq interprogram-paste-function
+        (lambda ()
+          (shell-command-to-string "pbpaste"))))
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
@@ -32,22 +35,6 @@
                     (lambda ()
                       (setq-local tab-width 2))))
         '(yaml-mode yaml-ts-mode))
-
-;; (when (and (not (display-graphic-p)) (eq system-type 'darwin))
-;;   (defun copy-to-clipboard ()
-;;     (interactive)
-;;     (if (region-active-p)
-;;         (progn
-;;           (shell-command-on-region (region-beginning) (region-end) "pbcopy")
-;;           (deactivate-mark))
-;;       (message "No region active; can't copy!")))
-
-;;   (defun paste-from-clipboard ()
-;;     (interactive)
-;;     (insert (shell-command-to-string "pbpaste")))
-
-;;   (global-set-key (kbd "M-w") 'copy-to-clipboard)
-;;   (global-set-key (kbd "C-y") 'paste-from-clipboard))
 
 ;; Auto completion example
 (use-package corfu
@@ -233,16 +220,11 @@
   (global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x b") 'helm-mini)
+  )
 
-)
+;; balance-windows
+(defun my/balance-windows (&rest _)
+  (balance-windows))
 
-(setq interprogram-cut-function
-      (lambda (text &optional push)
-        (let ((process-connection-type nil))
-          (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-            (process-send-string proc text)
-            (process-send-eof proc)))))
-
-(setq interprogram-paste-function
-      (lambda ()
-        (shell-command-to-string "pbpaste")))
+(advice-add 'split-window :after #'my/balance-windows)
+(advice-add 'delete-window :after #'my/balance-windows)
