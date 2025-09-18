@@ -27,4 +27,5 @@
 (package-install 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.astro\\'" . astro-ts-mode))
 
