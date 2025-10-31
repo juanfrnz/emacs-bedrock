@@ -116,6 +116,5 @@
 
 (use-package eldoc-box
   :ensure t
-  :hook ((eglot-managed-mode . eldoc-box-help-at-point-mode))  
   :config
   (setq eldoc-idle-delay 0.1))
