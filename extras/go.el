@@ -11,3 +11,7 @@
   (setq tab-width 4)
   (eglot-ensure)
   (add-hook 'before-save-hook #'eglot-format-buffer nil t))
+
+(use-package go-mode
+  :ensure t
+  :hook (go-mode . eglot-ensure))

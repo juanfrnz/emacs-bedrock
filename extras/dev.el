@@ -105,3 +105,17 @@
   ; (add-to-list 'eglot-server-programs
   ;              '(haskell-mode . ("haskell-language-server-wrapper" "--lsp")))
   )
+(use-package eglot
+  :ensure t
+  :config
+  (setq eglot-autoshutdown t
+        eldoc-echo-area-use-multiline-p t)
+  (define-key eglot-mode-map (kbd "C-c i") #'eglot-find-implementation)
+  (define-key eglot-mode-map (kbd "C-c d") #'eglot-find-definition)
+  (define-key eglot-mode-map (kbd "C-c r") #'eglot-find-references))
+
+(use-package eldoc-box
+  :ensure t
+  :hook ((eglot-managed-mode . eldoc-box-help-at-point-mode))  
+  :config
+  (setq eldoc-idle-delay 0.1))
