@@ -62,7 +62,16 @@
          )
   :config
   ;; Narrowing lets you restrict results to certain groups of candidates
-  (setq consult-narrow-key "<"))
+  (setq consult-narrow-key "<")
+
+  ;; Enable preview automatically as you navigate candidates
+  ;; Use debounced preview for better performance and reliability
+  (setq consult-preview-key '(:debounce 0 any))
+
+  ;; Alternatively, you can use these settings:
+  ;; (setq consult-preview-key 'any)  ; instant preview (can be slow)
+  ;; (setq consult-preview-key "M-.")  ; manual preview with M-.
+  )
 
 ;; Embark: supercharged context-dependent menu; kinda like a
 ;; super-charged right-click.
@@ -180,7 +189,7 @@
 (use-package orderless
   :ensure t
   :config
-  (setq completion-styles '(orderless)))
+  (setq completion-styles '(orderless basic)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
