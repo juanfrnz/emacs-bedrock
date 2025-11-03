@@ -218,9 +218,3 @@
   ;;(global-set-key (kbd "C-x b") 'helm-mini)
   )
 
-;; balance-windows
-(defun my/balance-windows (&rest _)
-  (balance-windows))
-
-(advice-add 'split-window :after #'my/balance-windows)
-(advice-add 'delete-window :after #'my/balance-windows)
