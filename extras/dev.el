@@ -118,3 +118,5 @@
   :ensure t
   :config
   (setq eldoc-idle-delay 0.1))
+
+(load-file (expand-file-name "stl-mode.el" user-emacs-directory))
