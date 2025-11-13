@@ -30,7 +30,7 @@
 
 (defvar stl-font-lock-keywords
   (let* ((stl-keywords
-          '("package" "import" "struct" "variant" "enum" "optional" "array" "sequence"))
+          '("package" "import" "struct" "class" "variant" "enum" "optional" "array" "sequence"))
          (stl-types
           '("bool" "u8" "u16" "u32" "u64" "i8" "i16" "i32" "i64"
             "f32" "f64" "string" "Duration"))
