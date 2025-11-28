@@ -196,7 +196,7 @@
 (use-package helm
   :ensure t
   :init
-  ;; (helm-mode 1)  ;; Disabled - conflicts with Vertico/Consult
+  (helm-mode 1)  ;; Disabled - conflicts with Vertico/Consult
   :config
   ;; Fuzzy matching
   (setq helm-mode-fuzzy-match t)
@@ -211,7 +211,6 @@
   (setq helm-ff-auto-follow t)
 
   ;; Keybindings
-  (global-set-key (kbd "C-x C-f") 'helm-find-files)
   (global-set-key (kbd "C-c C-g") 'helm-rg)
   (global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
   ;;(global-set-key (kbd "M-x") 'helm-M-x)
