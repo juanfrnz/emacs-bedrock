@@ -3,6 +3,28 @@
 ;;  C-x p f -> fuzzy find
 
 (xterm-mouse-mode)
+
+;; Fix cursor keys in terminal mode (prevents M-O interpretation)
+(when (not (display-graphic-p))
+  ;; Handle both ESC [ and ESC O sequences for cursor keys
+  (define-key input-decode-map "\e[1;2A" [S-up])
+  (define-key input-decode-map "\e[1;2B" [S-down])
+  (define-key input-decode-map "\e[1;2C" [S-right])
+  (define-key input-decode-map "\e[1;2D" [S-left])
+  (define-key input-decode-map "\e[1;5A" [C-up])
+  (define-key input-decode-map "\e[1;5B" [C-down])
+  (define-key input-decode-map "\e[1;5C" [C-right])
+  (define-key input-decode-map "\e[1;5D" [C-left])
+  (define-key input-decode-map "\eOA" [up])
+  (define-key input-decode-map "\eOB" [down])
+  (define-key input-decode-map "\eOC" [right])
+  (define-key input-decode-map "\eOD" [left])
+  (define-key input-decode-map "\e[A" [up])
+  (define-key input-decode-map "\e[B" [down])
+  (define-key input-decode-map "\e[C" [right])
+  (define-key input-decode-map "\e[D" [left])
+  ;; Prevent Meta-O from being interpreted
+  (global-unset-key (kbd "M-O")))
 (setq scroll-step 1)       ;; Scroll one line at a time
 (setq scroll-conservatively 101) ;; Avoid recentering the cursor while scrolling
 (setq scroll-margin 0)     ;; Do not keep a margin at the top/bottom
@@ -193,27 +215,50 @@
 ;;   :config
 ;;   (helm-projectile-on))
 
+;; Keep helm-rg for searching but disable helm-mode to avoid conflicts
 (use-package helm
   :ensure t
-  :init
-  (helm-mode 1)  ;; Disabled - conflicts with Vertico/Consult
   :config
-  ;; Fuzzy matching
+  ;; Enable fuzzy matching for helm
   (setq helm-mode-fuzzy-match t)
   (setq helm-completion-in-region-fuzzy-match t)
   (setq helm-buffers-fuzzy-matching t)
   (setq helm-recentf-fuzzy-match t)
   (setq helm-ff-fuzzy-matching t)
 
-  ;; Follow (preview) mode settings
-  (setq helm-follow-mode-persistent t)
-  (setq helm-ff-quick-update t)
-  (setq helm-ff-auto-follow t)
+  ;; Fix cursor key issue in terminal - unbind M-O
+  (with-eval-after-load 'helm-files
+    (define-key helm-find-files-map (kbd "M-O") nil))
 
-  ;; Keybindings
-  (global-set-key (kbd "C-c C-g") 'helm-rg)
-  (global-set-key (kbd "C-c C-f") 'helm-projectile-find-file)
-  ;;(global-set-key (kbd "M-x") 'helm-M-x)
-  ;;(global-set-key (kbd "C-x b") 'helm-mini)
-  )
+  ;; Keybindings - only keep helm-rg for search
+  (global-set-key (kbd "C-c C-g") 'helm-rg))
+
+;; Consult-dir for easy directory navigation
+(use-package consult-dir
+  :ensure t
+  :bind (("C-x C-d" . consult-dir)
+         :map vertico-map
+         ("C-x C-d" . consult-dir)
+         ("C-x C-j" . consult-dir-jump-file))
+  :config
+  ;; Add project root and bookmarks as sources
+  (setq consult-dir-project-list-function nil))
+
+;; Enhanced directory navigation in vertico
+(use-package vertico-directory
+  :after vertico
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+;; Additional navigation keybindings
+(global-set-key (kbd "C-c d") 'consult-dir)           ;; Quick directory jump
+(global-set-key (kbd "C-c C-d") 'consult-dir)         ;; Alternative binding
+(global-set-key (kbd "C-c r") 'consult-recent-file)   ;; Recent files
+
+;; Fast file finding with helm-find-files
+;; Use bind-key* to override major mode bindings
+(bind-key* "C-c C-f" 'helm-find-files)
 
