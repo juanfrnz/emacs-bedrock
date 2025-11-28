@@ -180,18 +180,18 @@
 (use-package helm-rg
   :ensure t)
 
-(use-package projectile
-  :ensure t
-  :init (projectile-mode 1)
-  :config
-  (setq projectile-indexing-method 'alien) ;; uses external tools like fd or git
-  (setq projectile-enable-caching t))
+;; (use-package projectile
+;;   :ensure t
+;;   :init (projectile-mode 1)
+;;   :config
+;;   (setq projectile-indexing-method 'alien) ;; uses external tools like fd or git
+;;   (setq projectile-enable-caching t))
 
-(use-package helm-projectile
-  :ensure t
-  :after (helm projectile)
-  :config
-  (helm-projectile-on))
+;; (use-package helm-projectile
+;;   :ensure t
+;;   :after (helm projectile)
+;;   :config
+;;   (helm-projectile-on))
 
 (use-package helm
   :ensure t
