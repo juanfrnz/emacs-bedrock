@@ -4,27 +4,6 @@
 
 (xterm-mouse-mode)
 
-;; Fix cursor keys in terminal mode (prevents M-O interpretation)
-(when (not (display-graphic-p))
-  ;; Handle both ESC [ and ESC O sequences for cursor keys
-  (define-key input-decode-map "\e[1;2A" [S-up])
-  (define-key input-decode-map "\e[1;2B" [S-down])
-  (define-key input-decode-map "\e[1;2C" [S-right])
-  (define-key input-decode-map "\e[1;2D" [S-left])
-  (define-key input-decode-map "\e[1;5A" [C-up])
-  (define-key input-decode-map "\e[1;5B" [C-down])
-  (define-key input-decode-map "\e[1;5C" [C-right])
-  (define-key input-decode-map "\e[1;5D" [C-left])
-  (define-key input-decode-map "\eOA" [up])
-  (define-key input-decode-map "\eOB" [down])
-  (define-key input-decode-map "\eOC" [right])
-  (define-key input-decode-map "\eOD" [left])
-  (define-key input-decode-map "\e[A" [up])
-  (define-key input-decode-map "\e[B" [down])
-  (define-key input-decode-map "\e[C" [right])
-  (define-key input-decode-map "\e[D" [left])
-  ;; Prevent Meta-O from being interpreted
-  (global-unset-key (kbd "M-O")))
 (setq scroll-step 1)       ;; Scroll one line at a time
 (setq scroll-conservatively 101) ;; Avoid recentering the cursor while scrolling
 (setq scroll-margin 0)     ;; Do not keep a margin at the top/bottom
@@ -202,20 +181,23 @@
 (use-package helm-rg
   :ensure t)
 
-;; (use-package projectile
-;;   :ensure t
-;;   :init (projectile-mode 1)
-;;   :config
-;;   (setq projectile-indexing-method 'alien) ;; uses external tools like fd or git
-;;   (setq projectile-enable-caching t))
+(use-package projectile
+  :ensure t
+  :init (projectile-mode 1)
+  :config
+  (setq projectile-indexing-method 'alien) ;; uses external tools like fd or git
+  (setq projectile-enable-caching t))
 
-;; (use-package helm-projectile
-;;   :ensure t
-;;   :after (helm projectile)
-;;   :config
-;;   (helm-projectile-on))
+(use-package helm-projectile
+  :ensure t
+  :after (helm projectile)
+  :config
+  (helm-projectile-on))
 
 ;; Keep helm-rg for searching but disable helm-mode to avoid conflicts
+(require 'helm)
+(setq helm-ff-lynx-style-map nil)
+(helm-mode 1)
 (use-package helm
   :ensure t
   :config
@@ -226,12 +208,22 @@
   (setq helm-recentf-fuzzy-match t)
   (setq helm-ff-fuzzy-matching t)
 
-  ;; Fix cursor key issue in terminal - unbind M-O
+  ;; Disable M-O in ALL helm keymaps
+  (define-key helm-map (kbd "M-O") nil)
+
+  ;; Fix M-O in all file-related helm maps
   (with-eval-after-load 'helm-files
-    (define-key helm-find-files-map (kbd "M-O") nil))
+    (define-key helm-find-files-map (kbd "M-O") nil)
+    (define-key helm-read-file-map (kbd "M-O") nil))
+
+  (with-eval-after-load 'helm-mode
+    (define-key helm-generic-files-map (kbd "M-O") nil))
 
   ;; Keybindings - only keep helm-rg for search
-  (global-set-key (kbd "C-c C-g") 'helm-rg))
+  (global-set-key (kbd "C-c C-g") 'helm-rg)
+  (define-key helm-map (kbd "<left>") 'backward-char)
+  (define-key helm-map (kbd "<right>") 'forward-char)
+  )
 
 ;; Consult-dir for easy directory navigation
 (use-package consult-dir
@@ -258,7 +250,7 @@
 (global-set-key (kbd "C-c C-d") 'consult-dir)         ;; Alternative binding
 (global-set-key (kbd "C-c r") 'consult-recent-file)   ;; Recent files
 
-;; Fast file finding with helm-find-files
+;; Recursive fuzzy file finding with helm-projectile
 ;; Use bind-key* to override major mode bindings
-(bind-key* "C-c C-f" 'helm-find-files)
+(bind-key* "C-c C-f" 'helm-projectile-find-file)
 
