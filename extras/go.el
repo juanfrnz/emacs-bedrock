@@ -10,7 +10,9 @@
   (setq indent-tabs-mode t)
   (setq tab-width 4)
   (eglot-ensure)
-  (add-hook 'before-save-hook #'eglot-format-buffer nil t))
+  (add-hook 'before-save-hook #'eglot-format-buffer nil t)
+  ;; Keybinding for finding implementations (gopls implements)
+  (local-set-key (kbd "C-c C-i") 'eglot-find-implementation))
 
 (use-package go-mode
   :ensure t
