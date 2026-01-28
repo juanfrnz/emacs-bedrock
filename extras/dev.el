@@ -120,3 +120,20 @@
   (setq eldoc-idle-delay 0.1))
 
 (load-file (expand-file-name "stl-mode.el" user-emacs-directory))
+
+(use-package breadcrumb
+  :ensure t
+  :config
+  (setq breadcrumb-imenu-max-length 50)
+  (breadcrumb-mode 1))
+
+(use-package symbols-outline
+  :ensure t
+  :bind ("C-c o" . symbols-outline-show)
+  :init
+  (add-hook 'eglot-managed-mode-hook'
+            (lambda ()
+              (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)))
+  :config
+  (setq symbols-outline-window-position 'left)
+  (symbols-outline-follow-mode))
