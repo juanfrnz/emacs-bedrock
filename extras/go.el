@@ -17,3 +17,14 @@
 (use-package go-mode
   :ensure t
   :hook (go-mode . eglot-ensure))
+
+(add-to-list 'eglot-server-programs '((go-mode go-ts-mode) .
+    ("gopls" :initializationOptions
+      (:hints (:parameterNames t
+               :rangeVariableTypes t
+               :functionTypeParameters t
+               :assignVariableTypes t
+               :compositeLiteralFields t
+               :compositeLiteralTypes t
+               :constantValues t)))))
+
