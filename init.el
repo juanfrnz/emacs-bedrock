@@ -270,4 +270,9 @@ If the new path's directories does not exist, create them."
  ;; If there is more than one, they won't work right.
  )
 
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(setq inhibit-startup-message t)
+(global-display-line-numbers-mode t)
+
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
