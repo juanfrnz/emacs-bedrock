@@ -13,17 +13,6 @@
 
 ;; (add-hook 'before-save-hook #'format-all-buffer)
 
-(use-package prettier
-  :ensure t
-  :hook ((typescript-mode . prettier-mode)
-         (typescript-ts-mode . prettier-mode)
-         (tsx-ts-mode . prettier-mode)
-         (js-mode . prettier-mode)
-         (js-ts-mode . prettier-mode)
-         (css-mode . prettier-mode)
-         (json-mode . prettier-mode)
-         (web-mode . prettier-mode)))
-
 (package-install 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-mode))
