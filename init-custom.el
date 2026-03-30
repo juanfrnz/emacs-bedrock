@@ -121,12 +121,6 @@
                 tsx-ts-mode-hook))
   (add-hook mode 'eglot-ensure))
 
-(use-package prettier
-  :ensure t
-  :hook (typescript-ts-mode . prettier-mode) ; Enable Prettier for specific modes
-  :config
-  (setq prettier-mode-sync-config-flag t)) ; Sync Prettier config with buffer
-
 (use-package copilot
   :vc (:url "https://github.com/copilot-emacs/copilot.el"
             :rev :newest
