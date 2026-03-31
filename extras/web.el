@@ -1,3 +1,20 @@
+(use-package prettier
+  :ensure t
+  :hook ((typescript-mode . prettier-mode)
+         (typescript-ts-mode . prettier-mode)
+         (tsx-ts-mode . prettier-mode)
+         (js-mode . prettier-mode)
+         (js-ts-mode . prettier-mode)
+         (css-mode . prettier-mode)
+         (css-ts-mode . prettier-mode)
+         (json-mode . prettier-mode)
+         (json-ts-mode . prettier-mode)
+         (html-mode . prettier-mode)
+         (mhtml-mode . prettier-mode)
+         (astro-ts-mode . prettier-mode)
+         (markdown-mode . prettier-mode)
+         (web-mode . prettier-mode)))
+
 (package-install 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-mode))
@@ -11,6 +28,7 @@
     (remove-hook 'after-save-hook #'biome-format-buffer t)))
 
 (dolist (hook '(astro-ts-mode-hook
+                astro-mode-hook
                 web-mode
                 html-mode-hook
                 mhtml-mode-hook
