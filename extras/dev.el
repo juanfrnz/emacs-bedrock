@@ -137,3 +137,13 @@
   :config
   (setq symbols-outline-window-position 'left)
   (symbols-outline-follow-mode))
+
+;; Dart / Flutter
+(use-package dart-mode
+  :ensure t
+  :hook (dart-mode . eglot-ensure))
+
+(add-to-list 'eglot-server-programs
+             '(dart-mode . ("dart" "language-server"
+                            "--client-id" "emacs.eglot-dart"
+                            "--protocol" "lsp")))
