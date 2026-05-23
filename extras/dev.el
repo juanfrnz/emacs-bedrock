@@ -147,3 +147,16 @@
              '(dart-mode . ("dart" "language-server"
                             "--client-id" "emacs.eglot-dart"
                             "--protocol" "lsp")))
+
+;; gptel
+(defun gptel-api-key-from-environment (&optional var)
+  (lambda ()
+    (getenv (or var                     ;provided key
+                (thread-first           ;or fall back to <TYPE>_API_KEY
+                  (type-of gptel-backend)
+                  (symbol-name)
+                  (substring 6)
+                  (upcase)
+                  (concat "_API_KEY"))))))
+(gptel-make-anthropic "My-Claude-backend"
+  :key (gptel-api-key-from-environment "ANTHROPIC_API_KEY"))

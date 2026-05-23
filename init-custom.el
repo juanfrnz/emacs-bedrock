@@ -16,17 +16,17 @@
 (setq select-enable-primary t)
 
 ;; copy-paste clipboard (Darwin)
-(when (eq system-type 'darwin)
-  (setq interprogram-cut-function
-        (lambda (text &optional push)
-          (let ((process-connection-type nil))
-            (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-              (process-send-string proc text)
-              (process-send-eof proc))))))
-(when (eq system-type 'darwin)
-  (setq interprogram-paste-function
-        (lambda ()
-          (shell-command-to-string "pbpaste"))))
+;; (when (eq system-type 'darwin)
+;;   (setq interprogram-cut-function
+;;         (lambda (text &optional push)
+;;           (let ((process-connection-type nil))
+;;             (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+;;               (process-send-string proc text)
+;;               (process-send-eof proc))))))
+;; (when (eq system-type 'darwin)
+;;   (setq interprogram-paste-function
+;;         (lambda ()
+;;           (shell-command-to-string "pbpaste"))))
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
