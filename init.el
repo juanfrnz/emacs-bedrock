@@ -276,3 +276,6 @@ If the new path's directories does not exist, create them."
 (global-display-line-numbers-mode t)
 
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
+
+(require 'xclip)
+(xclip-mode 1)
