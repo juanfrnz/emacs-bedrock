@@ -180,6 +180,7 @@
   :init (projectile-mode 1)
   :config
   (setq projectile-indexing-method 'alien) ;; uses external tools like fd or git
+  (setq projectile-require-project-root t)  
   (setq projectile-enable-caching t))
 
 (use-package helm-projectile
