@@ -259,7 +259,15 @@ If the new path's directories does not exist, create them."
  '(custom-safe-themes
    '("c46651ab216eb31e699be1bd5e6df8229b08005b534194c1ea92519b09661d71"
      default))
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(astro-ts-mode avy breadcrumb cape clang-format consult-dir copilot
+                   corfu-terminal dart-mode diff-hl doom-modeline eat
+                   eglot eldoc-box embark-consult go-mode
+                   helm-projectile helm-rg json-mode lsp-pyright
+                   marginalia nerd-icons-corfu nix-mode nix-ts-mode
+                   orderless plantuml-mode powershell prettier
+                   prettier-js rustic symbols-outline tide
+                   treesit-auto vertico wgrep xclip yaml-mode))
  '(package-vc-selected-packages
    '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
               "main"))))
