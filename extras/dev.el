@@ -147,3 +147,8 @@
              '(dart-mode . ("dart" "language-server"
                             "--client-id" "emacs.eglot-dart"
                             "--protocol" "lsp")))
+(use-package diff-hl
+  :ensure t
+  )
+(global-diff-hl-mode)
+(global-diff-hl-show-hunk-mouse-mode)
