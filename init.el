@@ -230,6 +230,9 @@ If the new path's directories does not exist, create them."
 ;; Packages for c++ development
 (load-file (expand-file-name "extras/cpp.el" user-emacs-directory))
 
+;; Packages for nix development
+(load-file (expand-file-name "extras/nix.el" user-emacs-directory))
+
 ;; Org-mode configuration
 ;; WARNING: need to customize things inside the elisp file before use! See
 ;; the file extras/org-intro.txt for help.
@@ -285,5 +288,11 @@ If the new path's directories does not exist, create them."
 
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
 
-(require 'xclip)
-(xclip-mode 1)
+;; System clipboard integration for terminal frames. On Wayland prefer
+;; wl-copy/wl-paste (from wl-clipboard) when available.
+(use-package xclip
+  :ensure t
+  :config
+  (when (and (getenv "WAYLAND_DISPLAY") (executable-find "wl-copy"))
+    (setq xclip-method 'wl-copy))
+  (xclip-mode 1))
