@@ -263,17 +263,20 @@ If the new path's directories does not exist, create them."
    '("c46651ab216eb31e699be1bd5e6df8229b08005b534194c1ea92519b09661d71"
      default))
  '(package-selected-packages
-   '(astro-ts-mode avy breadcrumb cape clang-format consult-dir copilot
-                   corfu-terminal dart-mode diff-hl doom-modeline eat
-                   eglot eldoc-box embark-consult go-mode
-                   helm-projectile helm-rg json-mode lsp-pyright
-                   marginalia nerd-icons-corfu nix-mode nix-ts-mode
-                   orderless plantuml-mode powershell prettier
-                   prettier-js rustic symbols-outline tide
+   '(astro-ts-mode avy breadcrumb cape clang-format claude-code-ide
+                   consult-dir copilot corfu-terminal dart-mode
+                   diff-hl doom-modeline eat eglot eldoc-box
+                   embark-consult ghostel go-mode helm-projectile
+                   helm-rg json-mode lsp-pyright marginalia
+                   nerd-icons-corfu nix-mode nix-ts-mode orderless
+                   plantuml-mode powershell prettier prettier-js
+                   rustic symbols-outline terraform-mode tide
                    treesit-auto vertico wgrep xclip yaml-mode))
  '(package-vc-selected-packages
-   '((copilot :url "https://github.com/copilot-emacs/copilot.el" :branch
-              "main"))))
+   '((claude-code-ide :url
+                      "https://github.com/manzaltu/claude-code-ide.el")
+     (copilot :url "https://github.com/copilot-emacs/copilot.el"
+              :branch "main"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -296,3 +299,14 @@ If the new path's directories does not exist, create them."
   (when (and (getenv "WAYLAND_DISPLAY") (executable-find "wl-copy"))
     (setq xclip-method 'wl-copy))
   (xclip-mode 1))
+
+(use-package ghostel
+  :ensure t)
+
+(use-package claude-code-ide
+  :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
+  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+  :config
+  (claude-code-ide-emacs-tools-setup)
+  ) ; Optionally enable Emacs MCP tools
+(setq claude-code-ide-terminal-backend 'ghostel)
