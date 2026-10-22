@@ -173,7 +173,16 @@
 
 
 (use-package helm-rg
-  :ensure t)
+  :ensure t
+  :config
+  ;; helm-rg runs rg with no path when searching the cwd. On Windows Emacs
+  ;; hands subprocesses a pipe as stdin, so rg searches stdin and hangs with
+  ;; no results. Always pass an explicit path.
+  (advice-add 'helm-rg--process-paths-to-search :filter-return
+              (lambda (paths) (or paths '("."))))
+  ;; helm-rg parses rg's tty output format (file heading + "N:" lines), but
+  ;; Windows has no pty so rg falls back to "file:text". Force the tty format.
+  (setq helm-rg-default-extra-args '("--heading" "--line-number")))
 
 (use-package projectile
   :ensure t
