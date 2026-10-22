@@ -4,6 +4,8 @@
 
 (xterm-mouse-mode)
 
+(setq ring-bell-function 'ignore) ;; No bell sound or visual flash
+
 (setq scroll-step 1)       ;; Scroll one line at a time
 (setq scroll-conservatively 101) ;; Avoid recentering the cursor while scrolling
 (setq scroll-margin 0)     ;; Do not keep a margin at the top/bottom
