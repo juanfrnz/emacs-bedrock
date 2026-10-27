@@ -345,3 +345,11 @@ If the new path's directories does not exist, create them."
   :after treemacs
   :config
   (treemacs-load-theme "nerd-icons"))
+
+(use-package terraform-mode
+  :ensure t
+  :hook (terraform-mode . eglot-ensure))
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(terraform-mode . ("terraform-ls" "serve"))))
