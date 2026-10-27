@@ -119,6 +119,19 @@
   :config
   (setq eldoc-idle-delay 0.1))
 
+(use-package flymake
+  :custom
+  (flymake-show-diagnostics-at-end-of-line 'short) ; show errors inline while editing
+  :bind (:map flymake-mode-map
+              ("M-n" . flymake-goto-next-error)
+              ("M-p" . flymake-goto-prev-error)))
+
+;; Show Flymake diagnostics alongside Eglot hover docs instead of hover hiding them
+(add-hook 'eglot-managed-mode-hook
+          (lambda ()
+            (setq-local eldoc-documentation-strategy
+                        #'eldoc-documentation-compose-eagerly)))
+
 (load-file (expand-file-name "stl-mode.el" user-emacs-directory))
 
 (use-package breadcrumb
