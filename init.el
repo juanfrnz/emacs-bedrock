@@ -263,15 +263,16 @@ If the new path's directories does not exist, create them."
    '("c46651ab216eb31e699be1bd5e6df8229b08005b534194c1ea92519b09661d71"
      default))
  '(package-selected-packages
-   '(astro-ts-mode avy breadcrumb cape clang-format claude-code-ide
-                   consult-dir copilot corfu-terminal dart-mode
-                   diff-hl doom-modeline eat eglot eldoc-box
-                   embark-consult ghostel go-mode helm-projectile
-                   helm-rg json-mode lsp-pyright marginalia
-                   nerd-icons-corfu nix-mode nix-ts-mode orderless
-                   plantuml-mode powershell prettier prettier-js
-                   rustic symbols-outline terraform-mode tide
-                   treesit-auto vertico wgrep xclip yaml-mode))
+   '(aidermacs astro-ts-mode avy breadcrumb cape clang-format
+               claude-code-ide consult-dir copilot corfu-terminal
+               dart-mode diff-hl doom-modeline eat eglot eldoc-box
+               embark-consult ghostel go-mode helm-projectile helm-rg
+               json-mode lsp-pyright marginalia nerd-icons-corfu
+               nix-mode nix-ts-mode orderless plantuml-mode powershell
+               prettier prettier-js rustic symbols-outline
+               terraform-mode tide tree-sitter-langs treemacs
+               treemacs-nerd-icons treemacs-projectile treesit-auto
+               vertico wgrep xclip yaml-mode))
  '(package-vc-selected-packages
    '((claude-code-ide :url
                       "https://github.com/manzaltu/claude-code-ide.el")
@@ -310,3 +311,31 @@ If the new path's directories does not exist, create them."
   (claude-code-ide-emacs-tools-setup)
   ) ; Optionally enable Emacs MCP tools
 (setq claude-code-ide-terminal-backend 'ghostel)
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :bind (("<f8>" . treemacs)            ; toggle the sidebar
+         ("C-c t s" . treemacs-select-window))
+  :config
+  (setq treemacs-width 30
+        treemacs-follow-after-init t)
+  (treemacs-follow-mode t)              ; highlight the file you're visiting
+  (treemacs-filewatch-mode t)           ; refresh when files change on disk
+  (treemacs-fringe-indicator-mode 'always)
+  (treemacs-git-mode 'simple)           ; git status colors
+  ;; Expand/collapse with a single left click instead of a double click
+  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
+
+;; Keep the tree open at startup
+(add-hook 'emacs-startup-hook #'treemacs)
+
+(use-package treemacs-projectile
+  :ensure t
+  :after (treemacs projectile))
+
+(use-package treemacs-nerd-icons
+  :ensure t
+  :after treemacs
+  :config
+  (treemacs-load-theme "nerd-icons"))
