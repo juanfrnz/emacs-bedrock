@@ -327,8 +327,14 @@ If the new path's directories does not exist, create them."
   ;; Expand/collapse with a single left click instead of a double click
   (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
 
-;; Keep the tree open at startup
-(add-hook 'emacs-startup-hook #'treemacs)
+;; Keep the tree open at startup, showing the project Emacs was started from
+(defun my/treemacs-startup ()
+  (require 'treemacs)
+  (if (treemacs--find-current-user-project)
+      (treemacs-add-and-display-current-project-exclusively)
+    (treemacs)))
+
+(add-hook 'emacs-startup-hook #'my/treemacs-startup)
 
 (use-package treemacs-projectile
   :ensure t
