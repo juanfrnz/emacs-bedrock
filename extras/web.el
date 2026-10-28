@@ -50,3 +50,31 @@
       (let ((output (shell-command-to-string
                      (format "bunx biome format --write %s" (shell-quote-argument file)))))
         (revert-buffer t t t)))))
+
+;; Lit web components: use lit-ts-mode (html`...`/css`...` template
+;; highlighting + class/id completion) for .ts/.js files that import Lit.
+(use-package lit-ts-mode
+  :ensure t
+  :init
+  (defun my/lit-component-file-p ()
+    "Return non-nil if the current buffer is a JS/TS file importing Lit."
+    (and buffer-file-name
+         (string-match-p "\\.[cm]?[jt]s\\'" buffer-file-name)
+         (save-excursion
+           (goto-char (point-min))
+           (re-search-forward
+            "from[ \t]+['\"]\\(lit\\|lit-element\\|lit-html\\|@lit/[^'\"]+\\)\\(/[^'\"]*\\)?['\"]"
+            magic-mode-regexp-match-limit t))))
+
+  (defun my/lit-mode ()
+    "Enable the Lit major mode matching the file extension."
+    (if (string-match-p "\\.[cm]?ts\\'" buffer-file-name)
+        (lit-ts-typescript-mode)
+      (lit-ts-js-mode)))
+
+  ;; magic-mode-alist is consulted before auto-mode-alist, so Lit files
+  ;; get the Lit modes while other .ts/.js files keep their usual modes.
+  (add-to-list 'magic-mode-alist '(my/lit-component-file-p . my/lit-mode))
+  :config
+  (unless (treesit-language-available-p 'lit-html)
+    (treesit-install-language-grammar 'lit-html)))
