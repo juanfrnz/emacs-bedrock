@@ -122,6 +122,7 @@
 (use-package flymake
   :custom
   (flymake-show-diagnostics-at-end-of-line 'short) ; show errors inline while editing
+  :hook (flymake-mode . (lambda () (setq-local truncate-lines t)))
   :bind (:map flymake-mode-map
               ("M-n" . flymake-goto-next-error)
               ("M-p" . flymake-goto-prev-error)))
