@@ -54,9 +54,55 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Magit: best Git client to ever exist
-;; (use-package magit
-;;   :ensure t
-;;   :bind (("C-x g" . magit-status)))
+;; magit-status lives in a dedicated right-hand side window (like treemacs on
+;; the left); everything it opens (diffs, logs, commits, files) goes to the
+;; main editing area instead of replacing the sidebar.
+(defvar my/magit-side-width 50
+  "Width of the magit-status side window.")
+
+(defun my/magit-display-buffer (buffer)
+  "Show magit-status in the right side window, other magit buffers elsewhere."
+  (if (eq (buffer-local-value 'major-mode buffer) 'magit-status-mode)
+      (display-buffer buffer
+                      `(display-buffer-in-side-window
+                        (side . right) (slot . 0)
+                        (window-width . ,my/magit-side-width)
+                        (preserve-size . (t . nil))
+                        (dedicated . t)
+                        (window-parameters . ((no-delete-other-windows . t)
+                                              (no-other-window . nil)))))
+    (display-buffer buffer
+                    '((display-buffer-reuse-window
+                       display-buffer-use-some-window)
+                      (inhibit-same-window . t)))))
+
+(defun my/magit-sidebar-visit-file ()
+  "Visit file at point; from the sidebar, open it in the main window."
+  (interactive)
+  (if (window-parameter nil 'window-side)
+      (magit-diff-visit-file-other-window)
+    (magit-diff-visit-file)))
+
+(defun my/magit-sidebar-toggle ()
+  "Toggle the magit-status sidebar for the current repository."
+  (interactive)
+  (let ((win (seq-find (lambda (w)
+                         (with-current-buffer (window-buffer w)
+                           (derived-mode-p 'magit-status-mode)))
+                       (window-list))))
+    (if win
+        (delete-window win)
+      (magit-status))))
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)
+         ("<f9>"  . my/magit-sidebar-toggle))
+  :config
+  (setq magit-display-buffer-function #'my/magit-display-buffer
+        magit-bury-buffer-function #'magit-restore-window-configuration)
+  (define-key magit-status-mode-map [remap magit-diff-visit-file]
+              #'my/magit-sidebar-visit-file))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
