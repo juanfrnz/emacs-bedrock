@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; Emacs Bedrock
 ;;;
 ;;; Extra config: Base enhancements
@@ -146,8 +147,9 @@
   (corfu-popupinfo-mode))
 
 ;; Make corfu popup come up in terminal overlay
+;; Not needed on Emacs 31+, which supports child frames in the terminal.
 (use-package corfu-terminal
-  :if (not (display-graphic-p))
+  :if (and (not (display-graphic-p)) (< emacs-major-version 31))
   :ensure t
   :config
   (corfu-terminal-mode))

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package prettier-js
   :ensure t
   :hook ((typescript-mode . prettier-js-mode)

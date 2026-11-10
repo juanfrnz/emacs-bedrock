@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Force use of go-mode instead of go-ts-mode to avoid issues with electric mode
 (add-to-list 'major-mode-remap-alist '(go-ts-mode . go-mode))
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))

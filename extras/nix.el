@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package nix-mode
   :ensure t
   :hook ((nix-mode nix-ts-mode) . my-nix-mode-setup))

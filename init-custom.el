@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Enable:
 ;;  mouse-mode
 ;;  C-x p f -> fuzzy find
