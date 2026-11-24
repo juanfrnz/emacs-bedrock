@@ -180,6 +180,18 @@
             (setq-local eldoc-documentation-strategy
                         #'eldoc-documentation-compose-eagerly)))
 
+;; Format buffer with the language server on save, when the server supports it.
+;; Skipped in buffers that already format on save with clang-format (C/C++)
+;; or prettier (JS/TS/web).
+(defun my/eglot-format-on-save ()
+  (if (and (eglot-managed-p)
+           (eglot-server-capable :documentFormattingProvider)
+           (not (bound-and-true-p clang-format-on-save-mode))
+           (not (bound-and-true-p prettier-js-mode)))
+      (add-hook 'before-save-hook #'eglot-format-buffer nil t)
+    (remove-hook 'before-save-hook #'eglot-format-buffer t)))
+(add-hook 'eglot-managed-mode-hook #'my/eglot-format-on-save)
+
 (load-file (expand-file-name "stl-mode.el" user-emacs-directory))
 
 (use-package breadcrumb
