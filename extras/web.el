@@ -1,21 +1,4 @@
 ;;; -*- lexical-binding: t; -*-
-(use-package prettier-js
-  :ensure t
-  :hook ((typescript-mode . prettier-js-mode)
-         (typescript-ts-mode . prettier-js-mode)
-         (tsx-ts-mode . prettier-js-mode)
-         (js-mode . prettier-js-mode)
-         (js-ts-mode . prettier-js-mode)
-         (css-mode . prettier-js-mode)
-         (css-ts-mode . prettier-js-mode)
-         (json-mode . prettier-js-mode)
-         (json-ts-mode . prettier-js-mode)
-         (html-mode . prettier-js-mode)
-         (mhtml-mode . prettier-js-mode)
-         (astro-ts-mode . prettier-js-mode)
-         (markdown-mode . prettier-js-mode)
-         (web-mode . prettier-js-mode)))
-
 (package-install 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.mdx\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mjs\\'" . js-mode))
@@ -30,7 +13,7 @@
 
 (dolist (hook '(astro-ts-mode-hook
                 astro-mode-hook
-                web-mode
+                web-mode-hook
                 html-mode-hook
                 mhtml-mode-hook
                 css-mode-hook
